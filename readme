@@ -1,0 +1,9 @@
+# clone repository
+git clone https://github.com/zohaibalishah/ffsteel-sequalize.git
+
+# install node_modules
+npm install
+
+# start application
+
+npm run dev
