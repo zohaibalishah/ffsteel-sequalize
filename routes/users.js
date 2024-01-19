@@ -3,6 +3,94 @@ var router = express.Router();
 const NodejsUser=require("../model/Users");
 const Products = require('../model/Products');
 
+/**
+ * @swagger
+ * tags:
+ *   name: User
+ *   description: Endpoints for User
+ */
+
+/**
+ * @swagger
+ * /users/add:
+ *   post:
+ *     summary: add new user
+ *     tags:
+ *       - User
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               first_name:
+ *                 type: string
+ *                 description: firstname
+ *               lastName:
+ *                 type: string
+ *                 description: lastname
+ *               email:
+ *                 type: string
+ *                 description: email
+ *             example:
+ *               firstname: "string"
+ *               lastname: "string"
+ *               email: "string"
+ *
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 first_name:
+ *                   type: string
+ *                   description: Auth token
+ *                 lastname:
+ *                   type: string
+ *                   description: Refresh token
+ *                 email:
+ *                   type: string
+ *                   description: API domain
+ *                 password:
+ *                   type: string
+ *                   description: Token type
+ *             example:
+ *               firstname: "ali"
+ *               lastname: ""
+ *               email: ""
+ *               password: ""
+ *       400:
+ *         description: Application fields are required
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   example: 0
+ *                 message:
+ *                   type: string
+ *                   example: "Invalid clientId"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   example: 0
+ *                 message:
+ *                   type: string
+ *                   example: "Server error"
+ *
+ */
 router.post('/add', async (req, res) => {
   try {
     const { first_name, lastName, email, password, dob } = req.body;
@@ -70,6 +158,16 @@ router.post('/addusers', async (req, res) => {
   }
 });
 
+
+/**
+ * @openapi
+ * /users/:
+ *   get:
+ *     description: return all users
+ *     responses:
+ *       200:
+ *         description: return new user data
+ */
 router.get('/', async (req, res) => {
   try {
     const result = await NodejsUser.findAll({
@@ -105,12 +203,16 @@ router.put('/users/:id', async (req, res) => {
   }
 });
 
+
+
+
 router.get('/bypk', async (req, res) => {
   const result = await NodejsUser.findByPk(3, {
     attributes: ['firstName', 'email'],
   });
   return res.json({ result });
 });
+
 
 router.get('/count', async (req, res) => {
   const users = await sequelize.query('SELECT * FROM NodejsUsers');

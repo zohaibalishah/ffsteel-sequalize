@@ -3,6 +3,13 @@ var router = express.Router();
 const Products = require('../model/Products');
 const NodejsUser = require('../model/Users');
 
+
+/**
+ * @swagger
+ * tags:
+ *   name: Products
+ *   description: Endpoints for Products
+ */
 router.post('/add', async (req, res) => {
   try {
     const result = await Products.create(req.body);
